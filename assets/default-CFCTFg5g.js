@@ -1,0 +1,1 @@
+import{d as o,r as n,o as r,c as s,w as e,V as _,a as t,b as c}from"./index-DhLGMe0c.js";const f=o({__name:"default",setup(l){return(p,u)=>{const a=n("router-view");return r(),s(_,null,{default:e(()=>[t(c,null,{default:e(()=>[t(a)]),_:1})]),_:1})}}});export{f as default};
