@@ -18,13 +18,3 @@ const app = createApp(App)
 registerPlugins(app)
 
 app.mount('#app')
-
-interface ImportData{
-  currency: String;
-  buyOrShort: String;
-  howToEnter: String;
-  sl: String;
-  tp: String;
-  timezone: String;
-  leverage: Number
-}

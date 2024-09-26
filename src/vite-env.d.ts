@@ -14,6 +14,6 @@ interface ImportData {
   tp: string;
   timezone: string;
   leverage: Number
-  background: HTMLImageElement
-  watermark: HTMLImageElement
+  background?: HTMLImageElement
+  watermark?: HTMLImageElement
 }
