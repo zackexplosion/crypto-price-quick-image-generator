@@ -41,22 +41,22 @@
 <script lang="ts" setup>
   import drawCanvas from '../draw-canvas'
   const data: ImportData = reactive({
-    currency: 'BTC',
+    // currency: 'BTC',
+    // buyOrShort: 'short',
+    // howToEnter: '市價-',
+    // sl: '111111',
+    // tp: '222222',
+    // timezone: '4H',
+    // leverage: 5,
+    // watermark: undefined,
+    // background: undefined,
+    currency: '',
     buyOrShort: 'short',
     howToEnter: '市價-',
-    sl: '111111',
-    tp: '222222',
+    sl: '',
+    tp: '',
     timezone: '4H',
     leverage: 5,
-    watermark: undefined,
-    background: undefined,
-  // currency: '',
-  // buyOrShort: 'short',
-  // howToEnter: '市價-',
-  // sl: '',
-  // tp: '',
-  // timezone: '4H',
-  // leverage: 5,
   })
 
   function setUploadedImage (event: any, type: string) {
