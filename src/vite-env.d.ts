@@ -15,6 +15,7 @@ interface ImportData {
   timezone: string
   leverage: Number
   noticeWords?: string
-  background?: HTMLImageElement
-  watermark?: HTMLImageElement
+  background?: HTMLImageElement | string
+  watermark?: HTMLImageElement | string
 }
+// type strObj = {[key:string]:{[key:string]:string}}

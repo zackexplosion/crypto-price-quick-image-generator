@@ -54,8 +54,9 @@
 </template>
 
 <script lang="ts" setup>
-import drawCanvas from "../draw-canvas";
-const IMAGE_FIELDS: string[] = ["background", "watermark"];
+// @ts-ignore
+import drawCanvas from "../draw-canvas"
+const IMAGE_FIELDS: string[] = ["background", "watermark"]
 const defaultSettings = {
   currency: "",
   buyOrShort: "short",
@@ -67,7 +68,7 @@ const defaultSettings = {
   noticeWords: "⚠️做好倉位管理隨時注意套保",
   background: "",
   watermark: "",
-};
+}
 
 let data: ImportData = reactive({
   // currency: 'BTC',
@@ -80,106 +81,120 @@ let data: ImportData = reactive({
   // watermark: undefined,
   // background: undefined,
   ...defaultSettings,
-});
+})
 
 function resetData() {
-  data = Object.assign(data, defaultSettings);
+  data = Object.assign(data, defaultSettings)
 }
 
 function saveData(data: ImportData) {
   let dataToSave: any = {
     ...data,
-  };
+  }
 
   IMAGE_FIELDS.forEach((_) => {
-    const img = <HTMLImageElement>data[_ as keyof ImportData];
+    const img = <HTMLImageElement>data[_ as keyof ImportData]
     if (img) {
-      dataToSave[`saved_img_${_}`] = img.src;
+      dataToSave[`saved_img_${_}`] = img.src
     }
-  });
+  })
 
-  dataToSave = JSON.stringify(dataToSave);
-  localStorage.setItem("savedData", dataToSave);
+  dataToSave = JSON.stringify(dataToSave)
+  localStorage.setItem("savedData", dataToSave)
 }
 
 function setUploadedImage(event: any, type: string) {
-  const file = event.target.files[0];
-  const reader = new FileReader();
+  const file = event.target.files[0]
+  const reader = new FileReader()
 
   // When the image is loaded, draw it on the canvas
   reader.onload = function (e: any) {
-    const img = new Image();
-    img.src = e.target.result;
+    const img = new Image()
+    img.src = e.target.result
 
     img.onload = function () {
       // Draw the uploaded image onto the canvas
       // ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
       if (type === "background") {
-        data.background = img;
+        data.background = img
       } else {
-        data.watermark = img;
+        data.watermark = img
       }
 
-      drawCanvas(data);
-    };
-  };
+      drawCanvas(data)
+    }
+  }
 
   // Read the uploaded image file
   if (file) {
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(file)
   }
 }
 
 watch(data, (_: ImportData) => {
-  drawCanvas(_);
-  saveData(_);
-});
+  drawCanvas(_)
+  saveData(_)
+})
 
-onMounted(async function() {
-
+onMounted(async function () {
   IMAGE_FIELDS.forEach((_) => {
     document
       .getElementById(_)
       ?.addEventListener("change", function (event: any) {
-        setUploadedImage(event, _);
-      });
-  });
+        setUploadedImage(event, _)
+      })
+  })
 
-  let savedData = localStorage.getItem("savedData");
+  let _savedData = localStorage.getItem("savedData")
 
-  if (savedData) {
-    savedData = JSON.parse(savedData);
-
+  if (_savedData) {
+    let savedData = <ImportData>JSON.parse(_savedData)
     console.log("savedData", savedData)
-
 
     let promises: any = []
 
-    IMAGE_FIELDS.forEach((_) => {
-      const savedImage = savedData[`saved_img_${_}`];
-      if (savedData && savedData[_]) {
-        promises.push(new Promise((resolve, reject) => {
-          const img = new Image();
+    for (const _ of IMAGE_FIELDS) {
+      const key: string = `saved_img_${_}`
+      const savedImage = <string>savedData[key as keyof ImportData]
+      if (!savedImage) return
+      promises.push(
+        new Promise((resolve, reject) => {
+          const img = new Image()
 
           img.src = savedImage
-          savedData[_] = img;
+
+          ;(savedData[_ as keyof ImportData] as HTMLImageElement) = img
 
           img.onload = function () {
             resolve({})
           }
-        }))
-      }
-    });
+        })
+      )
+    }
+    // IMAGE_FIELDS.forEach((_) => {
+    //   const key: string = `saved_img_${_}`
+    //   const savedImage = savedData[key]
+    //   if (savedImage) {
+    //     promises.push(new Promise((resolve, reject) => {
+    //       const img = new Image();
+
+    //       img.src = savedImage
+    //       savedData[_] = img;
+
+    //       img.onload = function () {
+    //         resolve({})
+    //       }
+    //     }))
+    //   }
+    // });
 
     await Promise.all(promises)
 
-
-    data = Object.assign(data, savedData);
+    data = Object.assign(data, savedData)
   }
 
-  drawCanvas(data);
-
-});
+  drawCanvas(data)
+})
 </script>
 
 <style scoped>

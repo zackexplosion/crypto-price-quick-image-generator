@@ -64,7 +64,7 @@ export default function drawCanvas (importData: ImportData) {
 
   if (importData.background) {
     ctx.filter = 'blur(20px)'
-    ctx.drawImage(importData.background, 0, 0, canvas.width, canvas.height)
+    ctx.drawImage(<HTMLImageElement>importData.background, 0, 0, canvas.width, canvas.height)
     ctx.filter = 'blur(0px)'
   } else {
   // Set background color
@@ -73,7 +73,7 @@ export default function drawCanvas (importData: ImportData) {
   }
 
   drawPriceInformation(ctx, importData)
-  const { watermark } = importData
+  const watermark = <HTMLImageElement>importData.watermark
   if (watermark) {
     // ctx.rotate(45 * Math.PI / 180)
     ctx.filter = 'opacity(50%)'
