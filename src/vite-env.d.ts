@@ -12,8 +12,9 @@ interface ImportData {
   howToEnter: string;
   sl: string;
   tp: string;
-  timezone: string;
+  timezone: string
   leverage: Number
+  noticeWords?: string
   background?: HTMLImageElement
   watermark?: HTMLImageElement
 }

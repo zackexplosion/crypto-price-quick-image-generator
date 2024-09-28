@@ -34,11 +34,13 @@ function drawPriceInformation (ctx: CanvasRenderingContext2D, importData: Import
     ctx.fillText(`${label} : ${text}`, drawFromX, y)
   })
 
-  ctx.fillText(`⚠️做好倉位管理隨時注意套保`, drawFromX, drawFromY + (offsetPerRow * keys.length))
+  if (importData.noticeWords) {
+    ctx.fillText(importData.noticeWords, drawFromX, drawFromY + (offsetPerRow * keys.length))
+  }
 }
 
 export default function drawCanvas (importData: ImportData) {
-  console.log('importData', importData)
+  // console.log('importData', importData)
   const canvas: any = document.getElementById('canvas')
   const ctx: CanvasRenderingContext2D = canvas.getContext('2d')
 
